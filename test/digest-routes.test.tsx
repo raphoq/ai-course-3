@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -9,6 +9,7 @@ import type { DigestRow, NightDigest } from '../src/digest/types.js';
 const night = '2026-10-28';
 const markerBeforeTests = process.env.LANE_MARKER;
 let runsDir: string;
+let fixtureRoot: string;
 let config: RigConfig;
 
 async function writeNight(contents: string, date = night) {
@@ -31,7 +32,9 @@ function htmlJobOrder(html: string): string[] {
 
 describe('digest routes', () => {
   beforeEach(async () => {
-    runsDir = await mkdtemp(join(tmpdir(), 'rig-digest-routes-'));
+    fixtureRoot = await mkdtemp(join(tmpdir(), 'rig-digest-routes-'));
+    runsDir = join(fixtureRoot, 'runs');
+    await mkdir(runsDir);
     config = {
       adapter: 'shim',
       installed: '2026-10-29T14:06:00+01:00',
@@ -43,7 +46,7 @@ describe('digest routes', () => {
   afterEach(async () => {
     if (markerBeforeTests === undefined) delete process.env.LANE_MARKER;
     else process.env.LANE_MARKER = markerBeforeTests;
-    await rm(runsDir, { recursive: true, force: true });
+    await rm(fixtureRoot, { recursive: true, force: true });
   });
 
   it('serves one valid digest through HTML and JSON in the same sorted order', async () => {
@@ -153,8 +156,7 @@ describe('digest routes', () => {
   });
 
   it('rejects invalid date and path-like values without exposing adjacent files', async () => {
-    const parentDir = join(runsDir, '..');
-    const adjacentPath = join(parentDir, `${night}.jsonl`);
+    const adjacentPath = join(fixtureRoot, `${night}.jsonl`);
     await writeFile(adjacentPath, JSON.stringify({ secret: 'adjacent-file-secret' }), 'utf8');
     try {
       for (const path of ['/api/digest/not-a-date', '/api/digest/2026-02-31', '/api/digest/%2e%2e%2f2026-10-28']) {
