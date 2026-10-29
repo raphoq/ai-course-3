@@ -44,8 +44,8 @@ export function DigestPage({ digest }: { digest: NightDigest }) {
                   ) : row.lastStatus}
                 </td>
                 <td>{row.lastError ?? '—'}</td>
-                <td>{row.firstAt}</td>
-                <td>{row.lastAt}</td>
+                <td class="timestamp">{row.firstAt}</td>
+                <td class="timestamp">{row.lastAt}</td>
               </tr>
             ))}
           </tbody>
