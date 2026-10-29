@@ -1,8 +1,9 @@
 ---
 plan: morning-digest
-status: ready
+status: done
 owner: rook
 opened: 2026-10-29
+closed: 2026-10-29
 ---
 
 # Morning digest
@@ -77,3 +78,16 @@ page again with `LANE_MARKER` unset (the banner reads "no marker set") and uploa
 link. Move this plan to `docs/plans/done/` with its issue list.
 
 Done when: the preview link no longer shows the lane marker.
+
+## Issues
+
+| # | Issue | URL | Blocked by | Worker | Closed | Status |
+|---|-------|-----|------------|--------|--------|--------|
+| 1 | Run log types and reader | [#1](https://github.com/raphoq/ai-course-3/issues/1) | — | codex · gpt-6-sol · high | 2026-10-29 | Closed |
+| 2 | Digest page: GET /digest/:night | [#2](https://github.com/raphoq/ai-course-3/issues/2) | #1 | codex · gpt-6-luna · medium; codex · gpt-6-sol · high (review and timestamp adjustment) | 2026-10-29 | Closed |
+| 3 | Digest JSON API: GET /api/digest/:night | [#3](https://github.com/raphoq/ai-course-3/issues/3) | #1 | codex · gpt-6-luna · medium | 2026-10-29 | Closed |
+| 4 | Status board: digest links and nightly status counts | [#4](https://github.com/raphoq/ai-course-3/issues/4) | #1 | codex · gpt-6-luna · medium | 2026-10-29 | Closed |
+| 5 | Digest route tests: page/API agreement and edge cases | [#5](https://github.com/raphoq/ai-course-3/issues/5) | #1, #2, #3 | codex · gpt-6-luna · high | 2026-10-29 | Closed |
+| 6 | Public preview: export HTML and submit repository for review | [#6](https://github.com/raphoq/ai-course-3/issues/6) | #1–#5 | codex · gpt-6-sol · high | 2026-10-29 | Closed after reviewer confirmation |
+| 7 | Preview cleanup: overwrite the reviewed page without its marker | [#7](https://github.com/raphoq/ai-course-3/issues/7) | #6 | codex · gpt-6-sol · high | 2026-10-29 | Closed; public page replaced and verified marker-free |
+| 8 | Archive the completed morning-digest plan with its issue list | [#8](https://github.com/raphoq/ai-course-3/issues/8) | #1–#7 | codex · gpt-6-luna · medium | 2026-10-29 (this archive commit) | Archived here; GitHub issue remains open pending landing |
